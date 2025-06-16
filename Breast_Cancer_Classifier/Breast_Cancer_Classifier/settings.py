@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-v(tk=3gu+(gu1c^7wi%j6!w7x61(-hs257)j*0gu@^ldztm3*7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['breast-cancer-prediction-fo7h.onrender.com']
 
 
 # Application definition
