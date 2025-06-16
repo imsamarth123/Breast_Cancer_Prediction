@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{% static 'BreastCancerClassifier/CSS/login.css' %}">
+    {% if error %}
+    <script>
+        alert("Invalid username or password!");
+    </script>
+    {% endif %}
+    {% if flag %}
+    <script>
+        alert("Registration Successful!!!");
+    </script>
+    {% endif %}
+
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login Here</h2>
+        <form method="post" action="">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="email">Email or Phone</label>
+                <input type="text" id="email" placeholder="Username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" name="password" required>
+            </div>
+            <button type="submit">Log In</button>
+        </form>
+        <a href="/">Create an account</a>
+    </div>
+</body>
+</html>

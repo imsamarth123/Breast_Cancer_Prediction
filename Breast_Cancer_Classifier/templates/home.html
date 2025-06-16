@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <link rel="stylesheet" href="{% static 'BreastCancerClassifier/CSS/home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="logo">BC Predictor</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}" class="active"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'predict' %}"><i class="fas fa-chart-line"></i> Predict</a></li>
+            <li><a href=""><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <div class="user-icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>Welcome, User</span>
+            </div>
+            <form method="post" action="/logout/" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Log Out
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="hero-section">
+            <div class="hero-text">
+                <h2>Early Detection Saves Lives</h2>
+                <p>Our advanced AI model helps in early detection of breast cancer with high accuracy</p>
+                <a href="{% url 'predict' %}" class="predict-btn">
+                    Make Prediction <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="hero-image">
+                <div class="pulse-circle"></div>
+                <div class="pulse-circle delay-1"></div>
+                <div class="pulse-circle delay-2"></div>
+                <i class="fas fa-heartbeat"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'BreastCancerClassifier/JS/home.js' %}"></script>
+</body>
+</html>

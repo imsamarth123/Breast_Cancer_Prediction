@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Prediction</title>
+    <link rel="stylesheet" href="{% static 'BreastCancerClassifier/CSS/predict.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="logo">BC Predictor</h1>
+        </div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="{% url 'predict' %}" class="active"><i class="fas fa-chart-line"></i> Predict</a></li>
+            <li><a href=""><i class="fas fa-info-circle"></i> About</a></li>
+        </ul>
+        <div class="user-icon">
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="close-btn" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>Welcome, User</span>
+            </div>
+            <form method="post" action="/logout/" class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Log Out
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="prediction-container">
+            <div class="prediction-header">
+                <h2><i class="fas fa-flask"></i> Breast Cancer Prediction</h2>
+                <p>Fill in the details below to get an instant prediction</p>
+            </div>
+
+            <form class="prediction-form" id="predictionForm" action="{% url 'predict' %}" method="post">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <!-- Column 1 -->
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" name="age" placeholder="Enter age" min="10" max="100">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="menopause">Menopause</label>
+                            <select id="menopause" name="menopause" required>
+                                <option value="" disabled selected>Select menopause status</option>
+                                <option value="1">Yes (1)</option>
+                                <option value="0">No (0)</option>
+                            </select>
+                            <i class="fas fa-venus"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="tumor-size">Tumor Size (cm)</label>
+                            <input type="number" id="tumor-size" name="tumor-size" placeholder="Enter tumor size" step="0.1" min="0" max="50">
+                            <i class="fas fa-ruler"></i>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="inv-nodes">Inv-Nodes</label>
+                            <input type="number" id="inv-nodes" name="inv-nodes" placeholder="Enter inv-nodes" min="0" max="50">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="breast">Breast</label>
+                            <select id="breast" name="breast">
+                                <option value="" disabled selected>Select breast</option>
+                                <option value="right">Right</option>
+                                <option value="left">Left</option>
+                            </select>
+                            <i class="fas fa-venus-double"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="metastasis">Metastasis</label>
+                            <input type="number" id="metastasis" name="metastasis" placeholder="Enter metastasis" min="0" max="10">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="form-column">
+                        <div class="form-group">
+                            <label for="breast-quadrant">Breast Quadrant</label>
+                            <select id="breast-quadrant" name="breast-quadrant">
+                                <option value="" disabled selected>Select breast quadrant</option>
+                                <option value="upper-inner">Upper inner</option>
+                                <option value="upper-outer">Upper outer</option>
+                                <option value="lower-outer">Lower outer</option>
+                                <option value="lower-inner">Lower inner</option>
+                            </select>
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="history">History</label>
+                            <input type="number" id="history" name="history" placeholder="Enter history" min="0" max="1">
+                            <i class="fas fa-history"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="reset" class="reset-btn">
+                        <i class="fas fa-redo"></i> Reset
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-chart-line"></i> Predict
+                    </button>
+                </div>
+            </form>
+
+            <div class="prediction-result" id="predictionResult">
+                <div class="result-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <div class="result-content">
+                    <h3>Prediction Result</h3>
+                    <p>Fill the form and click "Predict" to see the results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const predictionResultFromServer = "{{ result|default:'' }}";
+    </script>
+    <script src="{% static 'BreastCancerClassifier/JS/predict.js' %}"></script>
+</body>
+</html>
