@@ -3,4 +3,4 @@ About A web application built using Django and a Machine Learning model (Logisti
 
 ## 🚀 Live Demo
 
-![Website Demo](Demo/Working-demo/Workflow-gif.mp4)
+![Demo](https://raw.githubusercontent.com/your-username/your-repo/main/demo/website_demo.gif)
