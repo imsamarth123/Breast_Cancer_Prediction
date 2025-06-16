@@ -6,8 +6,6 @@ About A web application built using Django and a Machine Learning model (Logisti
 The web app is deployed and accessible here:  
 👉 [Breast Cancer Prediction Web App](https://breast-cancer-prediction-fo7h.onrender.com)
 
-https://breast-cancer-prediction-fo7h.onrender.com
-
 ## 🚀 User-Interface
 
 ### Home Page
