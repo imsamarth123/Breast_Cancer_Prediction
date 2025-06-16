@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from joblib import load
 import numpy as np
+import os
+from django.conf import settings
 
 # Create your views here.
 @login_required(login_url='login')
@@ -37,7 +39,14 @@ def predict_page(request):
                 v5=0
 
         print(v1,v2,v3,v4,v5,v6,v7,v8)
-        model = load("C:\\Users\\samar\\OneDrive - Charotar University\\sem-7\\ML Work\\Breast_Cancer_Prediction\\model.joblib")
+        # model = load("C:\\Users\\samar\\OneDrive - Charotar University\\sem-7\\ML Work\\Breast_Cancer_Prediction\\model.joblib") Not working in deployment
+        
+        model_path = os.path.join(settings.BASE_DIR, 'model.joblib')
+        model = load(model_path)
+
+
+        
+        
 
         # Sample input for prediction (replace with actual values)
         # Example: if model expects 4 features
